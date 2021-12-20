@@ -56,7 +56,7 @@ model = TrajGPT(mconf)
 # initialize a trainer instance and kick off training
 tconf = TrainerConfig(max_epochs=5, batch_size=64, learning_rate=6e-4,
                       lr_decay=True, warmup_tokens=512*20, final_tokens=2*len(train_dataset)*block_size,
-                      num_workers=0)
+                      ckpt_path = None, num_workers=0)
 trainer = Trainer(model, train_dataset, None, tconf)
 trainer.train()
 
