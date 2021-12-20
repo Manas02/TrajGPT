@@ -44,17 +44,17 @@ class CharDataset(Dataset):
         return x, y
 
 
-block_size = 32 # spatial extent of the model for its context
+block_size = 64 # spatial extent of the model for its context
 
 text = x
 train_dataset = CharDataset(text, block_size)
 
 mconf = TrajGPTConfig(train_dataset.vocab_size, train_dataset.block_size,
-                  n_layer=2, n_head=2, n_embd=512)
+                  n_layer=8, n_head=8, n_embd=512)
 model = TrajGPT(mconf)
 
 # initialize a trainer instance and kick off training
-tconf = TrainerConfig(max_epochs=5, batch_size=64, learning_rate=6e-4,
+tconf = TrainerConfig(max_epochs=10, batch_size=64, learning_rate=6e-4,
                       lr_decay=True, warmup_tokens=512*20, final_tokens=2*len(train_dataset)*block_size,
                       ckpt_path = None, num_workers=0)
 trainer = Trainer(model, train_dataset, None, tconf)
